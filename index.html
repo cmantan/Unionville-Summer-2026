@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games — Soccer Stats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@300;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f8f6f6;
+      color: #1a1a2e;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.88rem;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── Page title ── */
+    .page-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #1a1a2e;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 2px solid #e4e4ea;
+      line-height: 1;
+    }
+
+    /* ── Team section ── */
+    .team-section {
+      margin-bottom: 3rem;
+    }
+
+    .team-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid #e4e4ea;
+    }
+
+    .team-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #1a1a2e;
+    }    
+
+    /* ── Card ── */
+    .games-card {
+      background: #ffffff;
+      border: 1px solid #e4e4ea;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    .games-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── Table ── */
+    .games-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .games-table thead tr {
+      background: #f4f4f8;
+      border-bottom: 2px solid #e4e4ea;
+    }
+
+    .games-table thead th {
+      padding: 0.7rem 1rem;
+      text-align: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    .games-table tbody tr {
+      border-bottom: 1px solid #f0f0f4;
+      transition: background 0.1s;
+    }
+
+    .games-table tbody tr:last-child { border-bottom: none; }
+    .games-table tbody tr:hover { background: #f8f7fb; }
+
+    .games-table tbody td {
+      padding: 0.7rem 1rem;
+      color: #1a1a2e;
+      vertical-align: middle;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    /* ── Date ── */
+    .td-date {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #444;
+      text-align: left;
+    }
+
+    /* ── Scoreline ── */
+    .games-table tbody td.td-scoreline {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      min-width: 300px;
+      text-align: left;
+    }
+
+    .sl-team {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sl-team-left  { justify-content: flex-end;  text-align: right; }
+    .sl-team-right { justify-content: flex-start; text-align: left; }
+
+    .sl-name {
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: #1a1a2e;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sl-name-ours { font-weight: 600; }
+
+    .sl-score {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      flex-shrink: 0;
+      padding: 0 0.5rem;
+    }
+
+    .sl-goals {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      min-width: 1.1rem;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .sl-sep {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: #ccc;
+      line-height: 1;
+    }
+
+    /* ── Muted ── */
+    .td-muted { color: #bbb; }
+
+    /* ── Video badge ── */
+    .vid-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 0.1rem 0.35rem;
+      border-radius: 50%;
+      aspect-ratio: 1;
+      text-decoration: none;
+      transition: opacity 0.14s;
+      line-height: 1.5;
+    }
+    .vid-badge:hover { opacity: 0.75; }
+    .vid-yt { background: #fde8e8; color: #c0392b; border: 1px solid #f5c0bc; }
+
+    /* ── Report link ── */
+    a.report-link {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #2c5fbd;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+    a.report-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1 class="page-title">Unionville Milliken S. C. / Summer 2026 Season</h1>
+
+  
+  <div class="team-section">
+
+    <div class="team-header">
+        <span class="team-name">Unionville Milliken SC B Men 2026</span>
+    </div>
+
+    <div class="games-card">
+      <div class="games-table-wrap">
+        <table class="games-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Match</th>
+              <th>Competition</th>
+              <th>Video</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">25 May 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">2</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">3</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name">The Borough FC B Men</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League 3 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/wQuQo7JvNLs?si=F37DSeV4PTbzXBJP" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-05-25_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">20 May 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name">Kingston Sentinels B</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">3</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">1</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League 3 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/ZL9qcL5l2Fc?si=xt0YyTk00QvDXEE0" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-05-20_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">11 May 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">1</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">3</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name">Whitby FC B Men</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League 3 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/mtPuLr-zA0k?si=lIBUrUs8SaxFwzQL" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-05-11_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">04 May 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">6</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">0</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name">International FC B Men</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League 3 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/gDP00zjaWyE?si=G9y2dlO5HudwlzW6" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-05-04_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">25 Apr 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name">The Borough FC B Men</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">3</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">3</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League 3 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/FeNHdt5YMq4?si=SD6Ylza4FvIeVBUa" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-04-25_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">20 Apr 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">1</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">2</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name">Pickering FC B Men</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League 3 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/R_qRCzQ3o-4?si=7RNsOs6-Zk8taWrP" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-04-20_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="team-section">
+
+    <div class="team-header">
+        <span class="team-name">Unionville Milliken SC U20 Men 2026</span>
+    </div>
+
+    <div class="games-card">
+      <div class="games-table-wrap">
+        <table class="games-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Match</th>
+              <th>Competition</th>
+              <th>Video</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">06 May 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC U20 Men 2026</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">5</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">0</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name">Richmond Hill SC U20</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League U20 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/M4VKl6oIg4c?si=vU-JnjJE_USOiKNg" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-05-06_unionville-milliken-sc-u20-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+            
+            
+            
+            
+            
+            <tr>
+
+              <td class="td-date">29 Apr 2026</td>
+
+              <td class="td-scoreline">
+                
+                  <span class="sl-team sl-team-left">
+                    <span class="sl-name-ours sl-name">Unionville Milliken SC U20 Men 2026</span>
+                  </span>
+                  <span class="sl-score">
+                    <span class="sl-goals">4</span>
+                    <span class="sl-sep">:</span>
+                    <span class="sl-goals">2</span>
+                  </span>
+                  <span class="sl-team sl-team-right">
+                    <span class="sl-name">The Borough FC U20</span>
+                  </span>
+                
+              </td>
+
+              <td>Ontario Premier League U20 (M)</td>
+
+              <td>
+                
+                  <a href="https://youtu.be/n_gzKNUL5es?si=Bhgz0RuGp5aP6OHV" target="_blank" class="vid-badge vid-yt">▶</a>
+                
+              </td>
+
+              <td>
+                <a href="2026-04-29_unionville-milliken-sc-u20-men-2026.html" class="report-link">Report</a>
+              </td>
+
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  
+
+</div>
+</body>
+</html>
