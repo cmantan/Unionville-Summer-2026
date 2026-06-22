@@ -842,6 +842,54 @@
     .btn-sm  { padding: 0.3rem 0.75rem; font-size: 0.78rem; }
     .btn-ghost { color: #666; }
     .btn-ghost:hover { border-color: #1a1a2e; color: #1a1a2e; }
+
+    /* ── Possession Timeline ─────────────────────────────────── */
+    #possession-timeline {
+      width: 100%;
+      display: block;
+    }
+
+    /* ── Set Pieces ──────────────────────────────────────────── */
+    .gs-sp-block {
+      margin-bottom: 2rem;
+    }
+
+    .gs-sp-subtitle {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #666;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .gs-sp-table {
+      margin-bottom: 1.25rem;
+    }
+
+    .gs-sp-total-row td {
+      font-weight: 600;
+      border-top: 2px solid #e4e4ea;
+    }
+
+    .gs-sp-type-total {
+      font-weight: 600;
+    }
+
+    .gs-sp-zone-empty td {
+      opacity: 0.4;
+    }
+
+    .gs-sp-subrow td {
+      font-size: 0.85rem;
+      color: #888;
+      background: #fafafa;
+    }
+
+    .gs-sp-subrow-label {
+      padding-left: 1.5rem !important;
+    }
   </style>
 </head>
 <body>
@@ -2909,6 +2957,18 @@
             </tr>
             
             <tr>
+              <td class="gs-stat-val gs-stat-home">41.5%</td>
+              <td class="gs-stat-label">Possession</td>
+              <td class="gs-stat-val gs-stat-away">58.5%</td>
+            </tr>
+            
+            <tr>
+              <td class="gs-stat-val gs-stat-home">15.9s</td>
+              <td class="gs-stat-label">Avg Spell</td>
+              <td class="gs-stat-val gs-stat-away">21.9s</td>
+            </tr>
+            
+            <tr>
               <td class="gs-stat-val gs-stat-home">1</td>
               <td class="gs-stat-label">Offsides</td>
               <td class="gs-stat-val gs-stat-away">1</td>
@@ -3468,10 +3528,657 @@
             </div>
           </div>
 
-        </div>
-      </div>
-    </div>
-  </div>
+        </div><!-- close gs-breakdown-wrap (Defending) -->
+      </div><!-- close gs-section Defending -->
+
+      <!-- Possession Timeline -->
+          <div class="gs-section" style="margin-top:2rem">
+            <h3 class="gs-section-title">Possession Timeline</h3>
+            <div style="position:relative; width:100%; background:#f4f4f8; border-radius:8px; padding:1.5rem 1rem;">
+              <div style="display:flex; gap:1.5rem; margin-bottom:1rem; font-size:0.78rem; font-weight:600;">
+                <span>
+                  <span style="display:inline-block;width:12px;height:12px;background:#2471a3;border-radius:2px;vertical-align:middle;margin-right:4px;"></span>
+                  Unionville Milliken SC B Men 2026
+                </span>
+                <span>
+                  <span style="display:inline-block;width:12px;height:12px;background:#c0392b;border-radius:2px;vertical-align:middle;margin-right:4px;"></span>
+                  Pickering FC B Men
+                </span>
+                <span>
+                  <span style="display:inline-block;width:12px;height:3px;background:#f39c12;vertical-align:middle;margin-right:4px;"></span>
+                  Goal
+                </span>
+              </div>
+              <canvas id="possession-timeline" style="width:100%; height:120px;"></canvas>
+            </div>
+          </div>
+
+          <!-- Set Pieces -->
+          <div class="gs-section">
+            <h3 class="gs-section-title">Set Pieces</h3>
+
+            
+            
+
+            <!-- Row 1: By Type side by side -->
+            <div class="gs-breakdown-wrap">
+              <div class="gs-section">
+                <h4 class="gs-sp-subtitle">Our Set Pieces</h4>
+                <table class="gs-table gs-sp-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th class="gs-th-center">Total</th>
+                      <th class="gs-th-center">Good</th>
+                      <th class="gs-th-center">Routine</th>
+                      <th class="gs-th-center">Poor</th>
+                      <th class="gs-th-center">Failed</th>
+                      <th class="gs-th-center">Success %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Corner
+                      </td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        75.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Free Kick
+                      </td>
+                      <td class="gs-td-center">5</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">
+                        60.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Throw In
+                      </td>
+                      <td class="gs-td-center">38</td>
+                      <td class="gs-td-center">27</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">8</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">
+                        92.1%
+                      </td>
+                    </tr>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Goal Kick
+                      </td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        3
+                      </td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-total-row">
+                      <td class="gs-sp-type-total">
+                        Total
+                      </td>
+                      <td class="gs-td-center">51</td>
+                      <td class="gs-td-center">33</td>
+                      <td class="gs-td-center">
+                        3
+                      </td>
+                      <td class="gs-td-center">9</td>
+                      <td class="gs-td-center">6</td>
+                      <td class="gs-td-center">
+                        88.2%
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="gs-section">
+                <h4 class="gs-sp-subtitle">Opponent Set Pieces</h4>
+                <table class="gs-table gs-sp-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th class="gs-th-center">Total</th>
+                      <th class="gs-th-center">Good</th>
+                      <th class="gs-th-center">Routine</th>
+                      <th class="gs-th-center">Poor</th>
+                      <th class="gs-th-center">Failed</th>
+                      <th class="gs-th-center">Success %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Corner
+                      </td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        66.7%
+                      </td>
+                    </tr>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Free Kick
+                      </td>
+                      <td class="gs-td-center">8</td>
+                      <td class="gs-td-center">6</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">
+                        75.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Throw In
+                      </td>
+                      <td class="gs-td-center">27</td>
+                      <td class="gs-td-center">9</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">7</td>
+                      <td class="gs-td-center">11</td>
+                      <td class="gs-td-center">
+                        59.3%
+                      </td>
+                    </tr>
+                    
+                    <tr class="">
+                      <td class="gs-player-name">
+                        Goal Kick
+                      </td>
+                      <td class="gs-td-center">18</td>
+                      <td class="gs-td-center">6</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">9</td>
+                      <td class="gs-td-center">
+                        50.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-total-row">
+                      <td class="gs-sp-type-total">
+                        Total
+                      </td>
+                      <td class="gs-td-center">56</td>
+                      <td class="gs-td-center">23</td>
+                      <td class="gs-td-center">
+                        —
+                      </td>
+                      <td class="gs-td-center">10</td>
+                      <td class="gs-td-center">23</td>
+                      <td class="gs-td-center">
+                        58.9%
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Row 2: By Zone side by side -->
+            <div class="gs-breakdown-wrap" style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #e4e4ea;">
+              <div class="gs-section">
+                <h4 class="gs-sp-subtitle">Our Set Pieces — By Zone</h4>
+                <table class="gs-table gs-sp-table">
+                  <thead>
+                    <tr>
+                      <th>Zone</th>
+                      <th class="gs-th-center">Total</th>
+                      <th class="gs-th-center">Good</th>
+                      <th class="gs-th-center">Routine</th>
+                      <th class="gs-th-center">Poor</th>
+                      <th class="gs-th-center">Failed</th>
+                      <th class="gs-th-center">Success %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Own Box</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Goal Kick</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Defending Third</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Throw In</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Middle Third</td>
+                      <td class="gs-td-center">20</td>
+                      <td class="gs-td-center">19</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Free Kick</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Throw In</td>
+                      <td class="gs-td-center">18</td>
+                      <td class="gs-td-center">17</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Attacking Third</td>
+                      <td class="gs-td-center">14</td>
+                      <td class="gs-td-center">9</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        92.9%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Free Kick</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        0.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Throw In</td>
+                      <td class="gs-td-center">13</td>
+                      <td class="gs-td-center">9</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Opponent Box</td>
+                      <td class="gs-td-center">10</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">5</td>
+                      <td class="gs-td-center">
+                        50.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Corner</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        75.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Free Kick</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        50.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Throw In</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">
+                        25.0%
+                      </td>
+                    </tr>
+                    
+                    
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="gs-section">
+                <h4 class="gs-sp-subtitle">Opponent Set Pieces — By Zone</h4>
+                <table class="gs-table gs-sp-table">
+                  <thead>
+                    <tr>
+                      <th>Zone</th>
+                      <th class="gs-th-center">Total</th>
+                      <th class="gs-th-center">Good</th>
+                      <th class="gs-th-center">Routine</th>
+                      <th class="gs-th-center">Poor</th>
+                      <th class="gs-th-center">Failed</th>
+                      <th class="gs-th-center">Success %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Own Box</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Goal Kick</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Defending Third</td>
+                      <td class="gs-td-center">12</td>
+                      <td class="gs-td-center">7</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">
+                        66.7%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Free Kick</td>
+                      <td class="gs-td-center">5</td>
+                      <td class="gs-td-center">5</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Throw In</td>
+                      <td class="gs-td-center">7</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">
+                        42.9%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Middle Third</td>
+                      <td class="gs-td-center">27</td>
+                      <td class="gs-td-center">6</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">7</td>
+                      <td class="gs-td-center">14</td>
+                      <td class="gs-td-center">
+                        48.1%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Free Kick</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Throw In</td>
+                      <td class="gs-td-center">12</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">5</td>
+                      <td class="gs-td-center">
+                        58.3%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Goal Kick</td>
+                      <td class="gs-td-center">14</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">9</td>
+                      <td class="gs-td-center">
+                        35.7%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Attacking Third</td>
+                      <td class="gs-td-center">10</td>
+                      <td class="gs-td-center">5</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">
+                        70.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Corner</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">
+                        100.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Free Kick</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        0.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Throw In</td>
+                      <td class="gs-td-center">8</td>
+                      <td class="gs-td-center">4</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">
+                        75.0%
+                      </td>
+                    </tr>
+                    
+                    
+                    <tr class="gs-sp-zone-row ">
+                      <td class="gs-player-name">Opponent Box</td>
+                      <td class="gs-td-center">3</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">
+                        33.3%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Corner</td>
+                      <td class="gs-td-center">2</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        50.0%
+                      </td>
+                    </tr>
+                    
+                    <tr class="gs-sp-subrow">
+                      <td class="gs-sp-subrow-label">— Free Kick</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">—</td>
+                      <td class="gs-td-center">1</td>
+                      <td class="gs-td-center">
+                        0.0%
+                      </td>
+                    </tr>
+                    
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+    </div><!-- close gs-tab-inner -->
+  </div><!-- close tab-teamstats -->
 
   <!-- Events Log -->
   <div class="gs-tab-content" id="tab-log">
@@ -11647,289 +12354,289 @@
 
   <!-- Players Tab -->
   <div class="gs-tab-content" id="tab-players">
-  <div class="gs-tab-inner">
-    <div class="gs-section">
-      <h3 class="gs-section-title">Player Ratings</h3>
-      <table class="gs-table">
-        <thead>
-          <tr>
-            <th>Player</th>
-            <th>Position</th>
-            <th class="gs-th-center">Min</th>
-            <th class="gs-th-center">Rating</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-          <tr>
-            <td class="gs-player-name">Joaquin</td>
-            <td class="gs-muted">CM</td>
-            <td class="gs-td-center">
-              94'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                9.1
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Nahom</td>
-            <td class="gs-muted">RB</td>
-            <td class="gs-td-center">
-              56'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                8.3
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Nithin</td>
-            <td class="gs-muted">CB</td>
-            <td class="gs-td-center">
-              89'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                8.3
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Kato</td>
-            <td class="gs-muted">LM</td>
-            <td class="gs-td-center">
-              94'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                7.7
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Kira</td>
-            <td class="gs-muted">CB</td>
-            <td class="gs-td-center">
-              94'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                7.7
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Adchaiyan</td>
-            <td class="gs-muted">RM</td>
-            <td class="gs-td-center">
-              78'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                7.4
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Angelo</td>
-            <td class="gs-muted">LB</td>
-            <td class="gs-td-center">
-              70'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                7.4
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Ahrvin</td>
-            <td class="gs-muted">GK</td>
-            <td class="gs-td-center">
-              94'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                7.3
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Lucas</td>
-            <td class="gs-muted">CM</td>
-            <td class="gs-td-center">
-              46'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-high">
-                7.2
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Adam</td>
-            <td class="gs-muted">CAM</td>
-            <td class="gs-td-center">
-              
-              16'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                6.7
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Olimayan</td>
-            <td class="gs-muted">CM</td>
-            <td class="gs-td-center">
-              
-              48'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                6.5
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Lorenzo</td>
-            <td class="gs-muted">ST</td>
-            <td class="gs-td-center">
-              81'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                6.4
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Emerson</td>
-            <td class="gs-muted">RB</td>
-            <td class="gs-td-center">
-              
-              38'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                6.2
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Luca</td>
-            <td class="gs-muted">LB</td>
-            <td class="gs-td-center">
-              
-              24'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                6.1
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Charles</td>
-            <td class="gs-muted">bench_2</td>
-            <td class="gs-td-center">
-              
-              0'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                6.0
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Andrei</td>
-            <td class="gs-muted">CAM</td>
-            <td class="gs-td-center">
-              
-              5'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                6.0
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Nithilan</td>
-            <td class="gs-muted">ST</td>
-            <td class="gs-td-center">
-              
-              24'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                5.9
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Kaden</td>
-            <td class="gs-muted">ST</td>
-            <td class="gs-td-center">
-              
-              13'
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-mid">
-                5.7
-              </span>
-            </td>
-          </tr>
-          
-          <tr>
-            <td class="gs-player-name">Nathan</td>
-            <td class="gs-muted">ST</td>
-            <td class="gs-td-center">
-              70'
-              
-            </td>
-            <td class="gs-td-center">
-              <span class="gs-rating-badge gs-rating-low">
-                5.3
-              </span>
-            </td>
-          </tr>
-          
-        </tbody>
-      </table>
-    </div>
+    <div class="gs-tab-inner">
+      <div class="gs-section">
+        <h3 class="gs-section-title">Player Ratings</h3>
+        <table class="gs-table">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Position</th>
+              <th class="gs-th-center">Min</th>
+              <th class="gs-th-center">Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td class="gs-player-name">Joaquin</td>
+              <td class="gs-muted">CM</td>
+              <td class="gs-td-center">
+                94'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  9.1
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Nahom</td>
+              <td class="gs-muted">RB</td>
+              <td class="gs-td-center">
+                56'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  8.3
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Nithin</td>
+              <td class="gs-muted">CB</td>
+              <td class="gs-td-center">
+                89'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  8.3
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Kato</td>
+              <td class="gs-muted">LM</td>
+              <td class="gs-td-center">
+                94'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  7.7
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Kira</td>
+              <td class="gs-muted">CB</td>
+              <td class="gs-td-center">
+                94'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  7.7
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Adchaiyan</td>
+              <td class="gs-muted">RM</td>
+              <td class="gs-td-center">
+                78'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  7.4
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Angelo</td>
+              <td class="gs-muted">LB</td>
+              <td class="gs-td-center">
+                70'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  7.4
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Ahrvin</td>
+              <td class="gs-muted">GK</td>
+              <td class="gs-td-center">
+                94'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  7.3
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Lucas</td>
+              <td class="gs-muted">CM</td>
+              <td class="gs-td-center">
+                46'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-high">
+                  7.2
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Adam</td>
+              <td class="gs-muted">CAM</td>
+              <td class="gs-td-center">
+                
+                16'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  6.7
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Olimayan</td>
+              <td class="gs-muted">CM</td>
+              <td class="gs-td-center">
+                
+                48'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  6.5
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Lorenzo</td>
+              <td class="gs-muted">ST</td>
+              <td class="gs-td-center">
+                81'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  6.4
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Emerson</td>
+              <td class="gs-muted">RB</td>
+              <td class="gs-td-center">
+                
+                38'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  6.2
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Luca</td>
+              <td class="gs-muted">LB</td>
+              <td class="gs-td-center">
+                
+                24'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  6.1
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Andrei</td>
+              <td class="gs-muted">CAM</td>
+              <td class="gs-td-center">
+                
+                5'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  6.0
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Charles</td>
+              <td class="gs-muted">bench_2</td>
+              <td class="gs-td-center">
+                
+                0'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  6.0
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Nithilan</td>
+              <td class="gs-muted">ST</td>
+              <td class="gs-td-center">
+                
+                24'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  5.9
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Kaden</td>
+              <td class="gs-muted">ST</td>
+              <td class="gs-td-center">
+                
+                13'
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-mid">
+                  5.7
+                </span>
+              </td>
+            </tr>
+            
+            <tr>
+              <td class="gs-player-name">Nathan</td>
+              <td class="gs-muted">ST</td>
+              <td class="gs-td-center">
+                70'
+                
+              </td>
+              <td class="gs-td-center">
+                <span class="gs-rating-badge gs-rating-low">
+                  5.3
+                </span>
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
 
     <!-- Attacking Table -->
     <div class="gs-section" style="margin-top:2rem">
@@ -12969,9 +13676,8 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
-</div>
+    </div><!-- close gs-tab-inner -->
+  </div><!-- close tab-players -->
 
   <script>
   document.querySelectorAll('.gs-tab').forEach(btn => {
@@ -13531,6 +14237,96 @@
       rows.forEach(r => tbody.appendChild(r));
     });
   });
+
+  // ── Possession Timeline ──────────────────────────────
+  (function () {
+    const spells   = [{"end": 99.0, "start": 94.8, "team": "ours"}, {"end": 102.0, "start": 99.0, "team": "opponent"}, {"end": 108.0, "start": 102.0, "team": "ours"}, {"end": 131.0, "start": 108.0, "team": "opponent"}, {"end": 135.0, "start": 131.0, "team": "ours"}, {"end": 148.0, "start": 135.0, "team": "opponent"}, {"end": 160.0, "start": 148.0, "team": "ours"}, {"end": 203.0, "start": 160.0, "team": "opponent"}, {"end": 240.0, "start": 203.0, "team": "ours"}, {"end": 241.0, "start": 240.0, "team": "opponent"}, {"end": 258.0, "start": 241.0, "team": "ours"}, {"end": 260.0, "start": 258.0, "team": "opponent"}, {"end": 265.0, "start": 260.0, "team": "ours"}, {"end": 277.0, "start": 265.0, "team": "opponent"}, {"end": 283.0, "start": 277.0, "team": "ours"}, {"end": 289.0, "start": 283.0, "team": "opponent"}, {"end": 300.0, "start": 289.0, "team": "ours"}, {"end": 302.0, "start": 300.0, "team": "opponent"}, {"end": 311.0, "start": 302.0, "team": "ours"}, {"end": 334.0, "start": 311.0, "team": "opponent"}, {"end": 355.0, "start": 334.0, "team": "ours"}, {"end": 368.0, "start": 355.0, "team": "opponent"}, {"end": 371.0, "start": 368.0, "team": "ours"}, {"end": 414.0, "start": 371.0, "team": "opponent"}, {"end": 437.0, "start": 414.0, "team": "ours"}, {"end": 464.0, "start": 437.0, "team": "opponent"}, {"end": 468.0, "start": 464.0, "team": "ours"}, {"end": 499.0, "start": 468.0, "team": "opponent"}, {"end": 501.0, "start": 499.0, "team": "ours"}, {"end": 515.0, "start": 501.0, "team": "opponent"}, {"end": 573.0, "start": 515.0, "team": "ours"}, {"end": 582.0, "start": 573.0, "team": "opponent"}, {"end": 590.0, "start": 582.0, "team": "ours"}, {"end": 612.0, "start": 590.0, "team": "opponent"}, {"end": 620.0, "start": 612.0, "team": "ours"}, {"end": 627.0, "start": 620.0, "team": "opponent"}, {"end": 641.0, "start": 627.0, "team": "ours"}, {"end": 647.0, "start": 641.0, "team": "opponent"}, {"end": 653.0, "start": 647.0, "team": "ours"}, {"end": 673.0, "start": 653.0, "team": "opponent"}, {"end": 678.0, "start": 673.0, "team": "ours"}, {"end": 773.0, "start": 678.0, "team": "opponent"}, {"end": 781.0, "start": 773.0, "team": "ours"}, {"end": 785.0, "start": 781.0, "team": "opponent"}, {"end": 790.0, "start": 785.0, "team": "ours"}, {"end": 803.0, "start": 790.0, "team": "opponent"}, {"end": 807.0, "start": 803.0, "team": "ours"}, {"end": 842.0, "start": 807.0, "team": "opponent"}, {"end": 847.0, "start": 842.0, "team": "ours"}, {"end": 853.0, "start": 847.0, "team": "opponent"}, {"end": 858.0, "start": 853.0, "team": "ours"}, {"end": 861.0, "start": 858.0, "team": "opponent"}, {"end": 876.0, "start": 861.0, "team": "ours"}, {"end": 879.0, "start": 876.0, "team": "opponent"}, {"end": 881.0, "start": 879.0, "team": "ours"}, {"end": 899.0, "start": 881.0, "team": "opponent"}, {"end": 907.0, "start": 899.0, "team": "ours"}, {"end": 951.0, "start": 907.0, "team": "opponent"}, {"end": 954.0, "start": 951.0, "team": "ours"}, {"end": 973.0, "start": 954.0, "team": "opponent"}, {"end": 983.0, "start": 973.0, "team": "ours"}, {"end": 1008.0, "start": 983.0, "team": "opponent"}, {"end": 1028.0, "start": 1008.0, "team": "ours"}, {"end": 1104.0, "start": 1028.0, "team": "opponent"}, {"end": 1127.0, "start": 1104.0, "team": "ours"}, {"end": 1132.0, "start": 1127.0, "team": "opponent"}, {"end": 1184.0, "start": 1132.0, "team": "ours"}, {"end": 1188.0, "start": 1184.0, "team": "opponent"}, {"end": 1222.0, "start": 1188.0, "team": "ours"}, {"end": 1226.0, "start": 1222.0, "team": "opponent"}, {"end": 1248.0, "start": 1226.0, "team": "ours"}, {"end": 1252.0, "start": 1248.0, "team": "opponent"}, {"end": 1255.0, "start": 1252.0, "team": "ours"}, {"end": 1265.0, "start": 1255.0, "team": "opponent"}, {"end": 1318.0, "start": 1265.0, "team": "ours"}, {"end": 1349.0, "start": 1318.0, "team": "opponent"}, {"end": 1354.0, "start": 1349.0, "team": "ours"}, {"end": 1371.0, "start": 1354.0, "team": "opponent"}, {"end": 1399.0, "start": 1371.0, "team": "ours"}, {"end": 1400.0, "start": 1399.0, "team": "opponent"}, {"end": 1411.0, "start": 1400.0, "team": "ours"}, {"end": 1430.0, "start": 1411.0, "team": "opponent"}, {"end": 1433.0, "start": 1430.0, "team": "ours"}, {"end": 1471.0, "start": 1433.0, "team": "opponent"}, {"end": 1475.0, "start": 1471.0, "team": "ours"}, {"end": 1479.0, "start": 1475.0, "team": "opponent"}, {"end": 1484.0, "start": 1479.0, "team": "ours"}, {"end": 1512.0, "start": 1484.0, "team": "opponent"}, {"end": 1525.0, "start": 1512.0, "team": "ours"}, {"end": 1556.0, "start": 1525.0, "team": "opponent"}, {"end": 1580.0, "start": 1556.0, "team": "ours"}, {"end": 1586.0, "start": 1580.0, "team": "opponent"}, {"end": 1594.0, "start": 1586.0, "team": "ours"}, {"end": 1612.0, "start": 1594.0, "team": "opponent"}, {"end": 1616.0, "start": 1612.0, "team": "ours"}, {"end": 1630.0, "start": 1616.0, "team": "opponent"}, {"end": 1641.0, "start": 1630.0, "team": "ours"}, {"end": 1662.0, "start": 1641.0, "team": "opponent"}, {"end": 1665.0, "start": 1662.0, "team": "ours"}, {"end": 1676.0, "start": 1665.0, "team": "opponent"}, {"end": 1694.0, "start": 1676.0, "team": "ours"}, {"end": 1697.0, "start": 1694.0, "team": "opponent"}, {"end": 1708.0, "start": 1697.0, "team": "ours"}, {"end": 1718.0, "start": 1708.0, "team": "opponent"}, {"end": 1736.0, "start": 1718.0, "team": "ours"}, {"end": 1854.0, "start": 1736.0, "team": "opponent"}, {"end": 1874.0, "start": 1854.0, "team": "ours"}, {"end": 1902.0, "start": 1874.0, "team": "opponent"}, {"end": 1903.0, "start": 1902.0, "team": "ours"}, {"end": 1966.0, "start": 1903.0, "team": "opponent"}, {"end": 1974.0, "start": 1966.0, "team": "ours"}, {"end": 1984.0, "start": 1974.0, "team": "opponent"}, {"end": 1987.0, "start": 1984.0, "team": "ours"}, {"end": 1990.0, "start": 1987.0, "team": "opponent"}, {"end": 2022.0, "start": 1990.0, "team": "ours"}, {"end": 2080.0, "start": 2022.0, "team": "opponent"}, {"end": 2112.0, "start": 2080.0, "team": "ours"}, {"end": 2115.0, "start": 2112.0, "team": "opponent"}, {"end": 2127.0, "start": 2115.0, "team": "ours"}, {"end": 2195.0, "start": 2127.0, "team": "opponent"}, {"end": 2269.0, "start": 2195.0, "team": "ours"}, {"end": 2281.0, "start": 2269.0, "team": "opponent"}, {"end": 2301.0, "start": 2281.0, "team": "ours"}, {"end": 2307.0, "start": 2301.0, "team": "opponent"}, {"end": 2330.0, "start": 2307.0, "team": "ours"}, {"end": 2363.0, "start": 2330.0, "team": "opponent"}, {"end": 2364.0, "start": 2363.0, "team": "ours"}, {"end": 2378.0, "start": 2364.0, "team": "opponent"}, {"end": 2383.0, "start": 2378.0, "team": "ours"}, {"end": 2397.0, "start": 2383.0, "team": "opponent"}, {"end": 2398.0, "start": 2397.0, "team": "ours"}, {"end": 2429.0, "start": 2398.0, "team": "opponent"}, {"end": 2433.0, "start": 2429.0, "team": "ours"}, {"end": 2436.0, "start": 2433.0, "team": "opponent"}, {"end": 2437.0, "start": 2436.0, "team": "ours"}, {"end": 2443.0, "start": 2437.0, "team": "opponent"}, {"end": 2466.0, "start": 2443.0, "team": "ours"}, {"end": 2469.0, "start": 2466.0, "team": "opponent"}, {"end": 2471.0, "start": 2469.0, "team": "ours"}, {"end": 2496.0, "start": 2471.0, "team": "opponent"}, {"end": 2512.0, "start": 2496.0, "team": "ours"}, {"end": 2539.0, "start": 2512.0, "team": "opponent"}, {"end": 2549.0, "start": 2539.0, "team": "ours"}, {"end": 2563.0, "start": 2549.0, "team": "opponent"}, {"end": 2566.0, "start": 2563.0, "team": "ours"}, {"end": 2567.0, "start": 2566.0, "team": "opponent"}, {"end": 2639.0, "start": 2567.0, "team": "ours"}, {"end": 2644.0, "start": 2639.0, "team": "opponent"}, {"end": 2649.0, "start": 2644.0, "team": "ours"}, {"end": 2689.0, "start": 2649.0, "team": "opponent"}, {"end": 2694.0, "start": 2689.0, "team": "ours"}, {"end": 2698.0, "start": 2694.0, "team": "opponent"}, {"end": 2718.0, "start": 2698.0, "team": "ours"}, {"end": 2742.0, "start": 2718.0, "team": "opponent"}, {"end": 2843.0, "start": 2742.0, "team": "ours"}, {"end": 2854.0, "start": 2843.0, "team": "opponent"}, {"end": 2878.0, "start": 2854.0, "team": "ours"}, {"end": 2883.5, "start": 2878.0, "team": "opponent"}, {"end": 2921.0, "start": 2904.0, "team": "opponent"}, {"end": 2928.0, "start": 2921.0, "team": "ours"}, {"end": 2936.0, "start": 2928.0, "team": "opponent"}, {"end": 2939.0, "start": 2936.0, "team": "ours"}, {"end": 2970.0, "start": 2939.0, "team": "opponent"}, {"end": 2978.0, "start": 2970.0, "team": "ours"}, {"end": 3009.0, "start": 2978.0, "team": "opponent"}, {"end": 3026.0, "start": 3009.0, "team": "ours"}, {"end": 3055.0, "start": 3026.0, "team": "opponent"}, {"end": 3061.0, "start": 3055.0, "team": "ours"}, {"end": 3074.0, "start": 3061.0, "team": "opponent"}, {"end": 3124.0, "start": 3074.0, "team": "ours"}, {"end": 3166.0, "start": 3124.0, "team": "opponent"}, {"end": 3173.0, "start": 3166.0, "team": "ours"}, {"end": 3179.0, "start": 3173.0, "team": "opponent"}, {"end": 3188.0, "start": 3179.0, "team": "ours"}, {"end": 3202.0, "start": 3188.0, "team": "opponent"}, {"end": 3204.0, "start": 3202.0, "team": "ours"}, {"end": 3253.0, "start": 3204.0, "team": "opponent"}, {"end": 3267.0, "start": 3253.0, "team": "ours"}, {"end": 3281.0, "start": 3267.0, "team": "opponent"}, {"end": 3285.0, "start": 3281.0, "team": "ours"}, {"end": 3331.0, "start": 3285.0, "team": "opponent"}, {"end": 3333.0, "start": 3331.0, "team": "ours"}, {"end": 3336.0, "start": 3333.0, "team": "opponent"}, {"end": 3347.0, "start": 3336.0, "team": "ours"}, {"end": 3351.0, "start": 3347.0, "team": "opponent"}, {"end": 3356.0, "start": 3351.0, "team": "ours"}, {"end": 3399.0, "start": 3356.0, "team": "opponent"}, {"end": 3413.0, "start": 3399.0, "team": "ours"}, {"end": 3453.0, "start": 3413.0, "team": "opponent"}, {"end": 3482.0, "start": 3453.0, "team": "ours"}, {"end": 3517.0, "start": 3482.0, "team": "opponent"}, {"end": 3534.0, "start": 3517.0, "team": "ours"}, {"end": 3659.0, "start": 3534.0, "team": "opponent"}, {"end": 3660.0, "start": 3659.0, "team": "ours"}, {"end": 3722.0, "start": 3660.0, "team": "opponent"}, {"end": 3723.0, "start": 3722.0, "team": "ours"}, {"end": 3775.0, "start": 3723.0, "team": "opponent"}, {"end": 3780.0, "start": 3775.0, "team": "ours"}, {"end": 3784.0, "start": 3780.0, "team": "opponent"}, {"end": 3791.0, "start": 3784.0, "team": "ours"}, {"end": 3837.0, "start": 3791.0, "team": "opponent"}, {"end": 3862.0, "start": 3837.0, "team": "ours"}, {"end": 3867.0, "start": 3862.0, "team": "opponent"}, {"end": 3894.0, "start": 3867.0, "team": "ours"}, {"end": 3900.0, "start": 3894.0, "team": "opponent"}, {"end": 3944.0, "start": 3900.0, "team": "ours"}, {"end": 3951.0, "start": 3944.0, "team": "opponent"}, {"end": 3955.0, "start": 3951.0, "team": "ours"}, {"end": 3967.0, "start": 3955.0, "team": "opponent"}, {"end": 3979.0, "start": 3967.0, "team": "ours"}, {"end": 4009.0, "start": 3979.0, "team": "opponent"}, {"end": 4024.0, "start": 4009.0, "team": "ours"}, {"end": 4034.0, "start": 4024.0, "team": "opponent"}, {"end": 4037.0, "start": 4034.0, "team": "ours"}, {"end": 4045.0, "start": 4037.0, "team": "opponent"}, {"end": 4053.0, "start": 4045.0, "team": "ours"}, {"end": 4072.0, "start": 4053.0, "team": "opponent"}, {"end": 4079.0, "start": 4072.0, "team": "ours"}, {"end": 4086.0, "start": 4079.0, "team": "opponent"}, {"end": 4118.0, "start": 4086.0, "team": "ours"}, {"end": 4182.0, "start": 4118.0, "team": "opponent"}, {"end": 4199.0, "start": 4182.0, "team": "ours"}, {"end": 4209.0, "start": 4199.0, "team": "opponent"}, {"end": 4235.0, "start": 4209.0, "team": "ours"}, {"end": 4243.0, "start": 4235.0, "team": "opponent"}, {"end": 4249.0, "start": 4243.0, "team": "ours"}, {"end": 4256.0, "start": 4249.0, "team": "opponent"}, {"end": 4259.0, "start": 4256.0, "team": "ours"}, {"end": 4260.0, "start": 4259.0, "team": "opponent"}, {"end": 4298.0, "start": 4260.0, "team": "ours"}, {"end": 4328.0, "start": 4298.0, "team": "opponent"}, {"end": 4347.0, "start": 4328.0, "team": "ours"}, {"end": 4363.0, "start": 4347.0, "team": "opponent"}, {"end": 4383.0, "start": 4363.0, "team": "ours"}, {"end": 4449.0, "start": 4383.0, "team": "opponent"}, {"end": 4479.0, "start": 4449.0, "team": "ours"}, {"end": 4495.0, "start": 4479.0, "team": "opponent"}, {"end": 4501.0, "start": 4495.0, "team": "ours"}, {"end": 4505.0, "start": 4501.0, "team": "opponent"}, {"end": 4518.0, "start": 4505.0, "team": "ours"}, {"end": 4563.0, "start": 4518.0, "team": "opponent"}, {"end": 4646.0, "start": 4563.0, "team": "opponent"}, {"end": 4680.0, "start": 4646.0, "team": "ours"}, {"end": 4765.0, "start": 4680.0, "team": "opponent"}, {"end": 4821.0, "start": 4765.0, "team": "ours"}, {"end": 4855.0, "start": 4821.0, "team": "opponent"}, {"end": 4862.0, "start": 4855.0, "team": "opponent"}, {"end": 4959.0, "start": 4862.0, "team": "ours"}, {"end": 4966.0, "start": 4959.0, "team": "opponent"}, {"end": 4986.0, "start": 4966.0, "team": "ours"}, {"end": 5044.0, "start": 4986.0, "team": "opponent"}, {"end": 5049.0, "start": 5044.0, "team": "opponent"}, {"end": 5058.0, "start": 5049.0, "team": "ours"}, {"end": 5064.0, "start": 5058.0, "team": "opponent"}, {"end": 5067.0, "start": 5064.0, "team": "ours"}, {"end": 5073.0, "start": 5067.0, "team": "opponent"}, {"end": 5076.0, "start": 5073.0, "team": "ours"}, {"end": 5152.0, "start": 5076.0, "team": "opponent"}, {"end": 5157.0, "start": 5152.0, "team": "ours"}, {"end": 5162.0, "start": 5157.0, "team": "opponent"}, {"end": 5168.0, "start": 5162.0, "team": "ours"}, {"end": 5189.0, "start": 5168.0, "team": "opponent"}, {"end": 5196.0, "start": 5189.0, "team": "ours"}, {"end": 5200.0, "start": 5196.0, "team": "opponent"}, {"end": 5206.0, "start": 5200.0, "team": "ours"}, {"end": 5219.0, "start": 5206.0, "team": "opponent"}, {"end": 5233.0, "start": 5219.0, "team": "ours"}, {"end": 5239.0, "start": 5233.0, "team": "opponent"}, {"end": 5244.0, "start": 5239.0, "team": "ours"}, {"end": 5254.0, "start": 5244.0, "team": "opponent"}, {"end": 5259.0, "start": 5254.0, "team": "ours"}, {"end": 5261.0, "start": 5259.0, "team": "opponent"}, {"end": 5291.0, "start": 5261.0, "team": "ours"}, {"end": 5295.0, "start": 5291.0, "team": "opponent"}, {"end": 5297.0, "start": 5295.0, "team": "ours"}, {"end": 5327.0, "start": 5297.0, "team": "opponent"}, {"end": 5328.0, "start": 5327.0, "team": "ours"}, {"end": 5338.0, "start": 5328.0, "team": "opponent"}, {"end": 5369.0, "start": 5338.0, "team": "ours"}, {"end": 5398.0, "start": 5369.0, "team": "opponent"}, {"end": 5400.0, "start": 5398.0, "team": "ours"}, {"end": 5403.0, "start": 5400.0, "team": "opponent"}, {"end": 5408.0, "start": 5403.0, "team": "ours"}, {"end": 5449.0, "start": 5408.0, "team": "opponent"}, {"end": 5452.0, "start": 5449.0, "team": "ours"}, {"end": 5454.0, "start": 5452.0, "team": "opponent"}, {"end": 5456.0, "start": 5454.0, "team": "ours"}, {"end": 5462.0, "start": 5456.0, "team": "opponent"}, {"end": 5480.0, "start": 5462.0, "team": "ours"}, {"end": 5493.0, "start": 5480.0, "team": "opponent"}, {"end": 5494.0, "start": 5493.0, "team": "ours"}, {"end": 5498.0, "start": 5494.0, "team": "opponent"}, {"end": 5548.0, "start": 5498.0, "team": "ours"}, {"end": 5621.0, "start": 5548.0, "team": "opponent"}, {"end": 5633.0, "start": 5621.0, "team": "ours"}, {"end": 5635.0, "start": 5633.0, "team": "opponent"}, {"end": 5641.0, "start": 5635.0, "team": "ours"}, {"end": 5692.0, "start": 5641.0, "team": "opponent"}, {"end": 5745.0, "start": 5692.0, "team": "ours"}, {"end": 5748.0, "start": 5745.0, "team": "opponent"}, {"end": 5754.0, "start": 5748.0, "team": "ours"}, {"end": 5757.0, "start": 5754.0, "team": "opponent"}, {"end": 5861.0, "start": 5757.0, "team": "ours"}, {"end": 5872.1, "start": 5861.0, "team": "opponent"}];
+    const goals    = [{"team": "opponent", "ts": 2133.0}, {"team": "ours", "ts": 2206.0}, {"team": "opponent", "ts": 4701.0}];
+    const halfTs   = 2883.5;
+    const fullTs   = 5872.1;
+
+    const canvas = document.getElementById('possession-timeline');
+    if (!canvas) return;
+
+    const ctx    = canvas.getContext('2d');
+    const W      = canvas.offsetWidth || canvas.parentElement.offsetWidth || 600;
+    const H      = 120;
+    canvas.width  = W;
+    canvas.height = H;
+
+    const maxTs  = fullTs || (spells.length ? Math.max(...spells.map(s => s.end)) : 5400);
+    const halfY  = H / 2;
+    const barH   = 28;
+    const axisH  = 2;
+
+    function tsToX(ts) {
+      if (!halfTs) return (ts / maxTs) * W;
+      const gapPx   = W * 0.015;
+      const firstW  = W * (halfTs / maxTs) - gapPx / 2;
+      const secondW = W - firstW - gapPx;
+      if (ts <= halfTs) return (ts / halfTs) * firstW;
+      return firstW + gapPx + ((ts - halfTs) / (maxTs - halfTs)) * secondW;
+    }
+
+    ctx.fillStyle = '#ccc';
+    ctx.fillRect(0, halfY - axisH / 2, W, axisH);
+
+    if (halfTs) {
+      const gapPx = W * 0.015;
+      const gapX  = tsToX(halfTs);
+      ctx.clearRect(gapX, 0, gapPx, H);
+      ctx.fillStyle = '#f4f4f8';
+      ctx.fillRect(gapX, 0, gapPx, H);
+      ctx.fillStyle = '#aaa';
+      ctx.font = '10px Barlow, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('HT', gapX + gapPx / 2, halfY + 4);
+    }
+
+    spells.forEach(s => {
+      const x1 = tsToX(s.start);
+      const x2 = tsToX(s.end);
+      const w  = Math.max(x2 - x1, 1);
+      ctx.fillStyle = s.team === 'ours' ? 'rgba(36,113,163,0.75)' : 'rgba(192,57,43,0.75)';
+      ctx.fillRect(x1, s.team === 'ours' ? halfY - axisH / 2 - barH : halfY + axisH / 2, w, barH);
+    });
+
+    goals.forEach(g => {
+      const x = tsToX(g.ts);
+      ctx.strokeStyle = '#f39c12';
+      ctx.lineWidth   = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, halfY - barH - 6);
+      ctx.lineTo(x, halfY + barH + 6);
+      ctx.stroke();
+      ctx.fillStyle = '#f39c12';
+      ctx.beginPath();
+      if (g.team === 'ours') {
+        ctx.moveTo(x - 5, halfY - barH - 6);
+        ctx.lineTo(x + 5, halfY - barH - 6);
+        ctx.lineTo(x, halfY - barH - 12);
+      } else {
+        ctx.moveTo(x - 5, halfY + barH + 6);
+        ctx.lineTo(x + 5, halfY + barH + 6);
+        ctx.lineTo(x, halfY + barH + 12);
+      }
+      ctx.closePath();
+      ctx.fill();
+    });
+
+    ctx.fillStyle = '#999';
+    ctx.font      = '9px Barlow, sans-serif';
+    ctx.textAlign = 'center';
+    const totalMins = Math.ceil(maxTs / 60);
+    const step = totalMins > 100 ? 15 : 10;
+    for (let m = step; m < totalMins; m += step) {
+      const x = tsToX(m * 60);
+      ctx.fillStyle = '#ccc';
+      ctx.fillRect(x, halfY - 4, 1, 8);
+      ctx.fillStyle = '#999';
+      ctx.fillText(m + "'", x, halfY + barH + 20);
+    }
+  })();
 
   </script>
 
