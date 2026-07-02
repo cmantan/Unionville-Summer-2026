@@ -1,788 +1,1835 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Games — Soccer Stats</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@300;600;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/main.css">
+  
+<link rel="stylesheet" href="/static/css/games.css">
 
-    body {
-      background: #f8f6f6;
-      color: #1a1a2e;
-      font-family: 'Barlow', sans-serif;
-      font-size: 0.88rem;
-    }
-
-    .wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
-    }
-
-    /* ── Page title ── */
-    .page-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #1a1a2e;
-      margin-bottom: 2.5rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 2px solid #e4e4ea;
-      line-height: 1;
-    }
-
-    /* ── Team section ── */
-    .team-section {
-      margin-bottom: 3rem;
-    }
-
-    .team-header {
-      display: flex;
-      align-items: baseline;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 2px solid #e4e4ea;
-    }
-
-    .team-name {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #1a1a2e;
-    }    
-
-    /* ── Card ── */
-    .games-card {
-      background: #ffffff;
-      border: 1px solid #e4e4ea;
-      border-radius: 12px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      overflow: hidden;
-    }
-
-    .games-table-wrap {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    /* ── Table ── */
-    .games-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
-
-    .games-table thead tr {
-      background: #f4f4f8;
-      border-bottom: 2px solid #e4e4ea;
-    }
-
-    .games-table thead th {
-      padding: 0.7rem 1rem;
-      text-align: center;
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: #888;
-      white-space: nowrap;
-    }
-
-    .games-table tbody tr {
-      border-bottom: 1px solid #f0f0f4;
-      transition: background 0.1s;
-    }
-
-    .games-table tbody tr:last-child { border-bottom: none; }
-    .games-table tbody tr:hover { background: #f8f7fb; }
-
-    .games-table tbody td {
-      padding: 0.7rem 1rem;
-      color: #1a1a2e;
-      vertical-align: middle;
-      white-space: nowrap;
-      text-align: center;
-    }
-
-    /* ── Date ── */
-    .td-date {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: #444;
-      text-align: left;
-    }
-
-    /* ── Scoreline ── */
-    .games-table tbody td.td-scoreline {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1rem;
-      min-width: 300px;
-      text-align: left;
-    }
-
-    .sl-team {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      flex: 1;
-      min-width: 0;
-    }
-
-    .sl-team-left  { justify-content: flex-end;  text-align: right; }
-    .sl-team-right { justify-content: flex-start; text-align: left; }
-
-    .sl-name {
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: #1a1a2e;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .sl-name-ours { font-weight: 600; }
-
-    .sl-score {
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
-      flex-shrink: 0;
-      padding: 0 0.5rem;
-    }
-
-    .sl-goals {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #1a1a2e;
-      min-width: 1.1rem;
-      text-align: center;
-      line-height: 1;
-    }
-
-    .sl-sep {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 300;
-      color: #ccc;
-      line-height: 1;
-    }
-
-    /* ── Muted ── */
-    .td-muted { color: #bbb; }
-
-    /* ── Video badge ── */
-    .vid-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      padding: 0.1rem 0.35rem;
-      border-radius: 50%;
-      aspect-ratio: 1;
-      text-decoration: none;
-      transition: opacity 0.14s;
-      line-height: 1.5;
-    }
-    .vid-badge:hover { opacity: 0.75; }
-    .vid-yt { background: #fde8e8; color: #c0392b; border: 1px solid #f5c0bc; }
-
-    /* ── Report link ── */
-    a.report-link {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #2c5fbd;
-      text-decoration: none;
-      letter-spacing: 0.03em;
-    }
-    a.report-link:hover { text-decoration: underline; }
-  </style>
 </head>
 <body>
-<div class="wrap">
-
-  <h1 class="page-title">Unionville Milliken S. C. / Summer 2026 Season</h1>
-
-  
-  <div class="team-section">
-
-    <div class="team-header">
-        <span class="team-name">Unionville Milliken SC B Men 2026</span>
+  <nav class="navbar">
+    <div class="nav-brand">⚽ Soccer Stats</div>
+    <div class="nav-links">
+      <a href="/players/" class="nav-link ">Players</a>
+      <a href="/games/" class="nav-link active">Games</a>
+      <a href="/teams/" class="nav-link ">Teams</a>
+      <a href="/stats/players" class="nav-link">Player Report</a>    
     </div>
+  </nav>
+  <main class="main-content">
+    
+<div class="games-wrap">
 
-    <div class="games-card">
-      <div class="games-table-wrap">
-        <table class="games-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Match</th>
-              <th>Competition</th>
-              <th>Video</th>
-              <th>Report</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">17 Jun 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name">Whitby FC B Men</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">3</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">1</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/Y0glTFKtWxE?si=_LqcU3t6azysemqm" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-06-17_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">08 Jun 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">2</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">4</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name">Richmond Hill SC Men</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/xo8HRAt8gsE?si=fX77tNPMJaotF37_" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-06-08_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">01 Jun 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name">International FC B Men</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">3</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">9</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/0Te-XqmiYeo?si=FQ01T0rnuYyy1kr6" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-06-01_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">25 May 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">2</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">3</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name">The Borough FC B Men</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/wQuQo7JvNLs?si=F37DSeV4PTbzXBJP" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-05-25_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">20 May 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name">Kingston Sentinels B</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">3</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">1</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/ZL9qcL5l2Fc?si=xt0YyTk00QvDXEE0" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-05-20_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">11 May 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">1</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">3</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name">Whitby FC B Men</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/mtPuLr-zA0k?si=lIBUrUs8SaxFwzQL" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-05-11_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">04 May 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">6</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">0</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name">International FC B Men</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/gDP00zjaWyE?si=G9y2dlO5HudwlzW6" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-05-04_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">25 Apr 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name">The Borough FC B Men</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">3</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">3</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/FeNHdt5YMq4?si=SD6Ylza4FvIeVBUa" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-04-25_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">20 Apr 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC B Men 2026</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">1</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">2</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name">Pickering FC B Men</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League 3 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/R_qRCzQ3o-4?si=7RNsOs6-Zk8taWrP" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-04-20_unionville-milliken-sc-b-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
-
+  <!-- Page header -->
+  <div class="games-page-header">
+    <h1 class="games-page-title">Games</h1>
+    <button class="btn btn-primary" onclick="openModal('add-modal')">+ Add Game</button>
+    <a href="/games/export" target="_blank" class="btn btn-ghost">↗ Export</a>
   </div>
+
   
-  <div class="team-section">
+  <div class="games-card">
+    <div class="games-table-wrap">
+      <table class="games-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th class="th-scoreline">Match</th>
+            <th>Competition</th>
+            <th>League</th>
+            <th>Video</th>
+            <th>Report</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td class="td-date">20 Jun 2026</td>
 
-    <div class="team-header">
-        <span class="team-name">Unionville Milliken SC U20 Men 2026</span>
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">0</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">4</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">Kingston Sentinels B</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/1bV4SYuAbz8?si=ASpxh-W6OQZafDBG" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/21" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="21"
+                      data-date="2026-06-20"
+                      data-kickoff-time="17:00"
+                      data-team="4"
+                      data-opponent="Kingston Sentinels B"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-4-2"
+                      data-location="Mount Joy"
+                      data-field-surface="Artificial"
+                      data-weather="20 °C / Sunny / Wind Speed 19 km/h / Humidity 53%"
+                      data-referee="Angelina BALDINO"
+                      data-linesman1="Charlotte KONYER"
+                      data-linesman2="Michael KONSTANTOPOULOS"
+                      data-game-website="https://oplsoccer.ca/match/349411835/"
+                      data-local=""
+                      data-youtube="https://youtu.be/1bV4SYuAbz8?si=ASpxh-W6OQZafDBG"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/21/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/21/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411835/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/21">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Kingston Sentinels B">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">17 Jun 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name">Whitby FC B Men</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">3</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">1</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/Y0glTFKtWxE?si=_LqcU3t6azysemqm" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/19" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="19"
+                      data-date="2026-06-17"
+                      data-kickoff-time="21:00"
+                      data-team="4"
+                      data-opponent="Whitby FC B Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="away"
+                      data-formation="4-4-2"
+                      data-location="Whitby Dome"
+                      data-field-surface="Artificial"
+                      data-weather="Indoor"
+                      data-referee="Roain SATARZADEH"
+                      data-linesman1="Alexander LEVESQUE"
+                      data-linesman2="Onder YUKSEL"
+                      data-game-website="https://oplsoccer.ca/match/349411823/"
+                      data-local=""
+                      data-youtube="https://youtu.be/Y0glTFKtWxE?si=_LqcU3t6azysemqm"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/19/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/19/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411823/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/19">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Whitby FC B Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">10 Jun 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC U20 Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">–</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">–</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">Inter Toronto IV</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League U20 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/vYnLPZYcEws?si=jdo_-x8OkKUe3Lje" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span class="td-muted">—</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/20" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="20"
+                      data-date="2026-06-10"
+                      data-kickoff-time="21:00"
+                      data-team="5"
+                      data-opponent="Inter Toronto IV"
+                      data-competition="Ontario Premier League U20 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-3-3"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="25 °C / Passing clouds / Wind Speed 13 km/h / Humidity 65%"
+                      data-referee="Nick VAGENAS"
+                      data-linesman1="Onder YUKSEL"
+                      data-linesman2="Joshua YARUSSKY"
+                      data-game-website="https://oplsoccer.ca/match/349414586/"
+                      data-local=""
+                      data-youtube="https://youtu.be/vYnLPZYcEws?si=jdo_-x8OkKUe3Lje"
+                      data-veo=""
+                      data-report-ready="false"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/20/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/20/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349414586/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/20">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Inter Toronto IV">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">08 Jun 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">2</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">4</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">Richmond Hill SC Men</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/xo8HRAt8gsE?si=fX77tNPMJaotF37_" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/18" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="18"
+                      data-date="2026-06-08"
+                      data-kickoff-time="20:30"
+                      data-team="4"
+                      data-opponent="Richmond Hill SC Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-4-2"
+                      data-location="Mount Joy"
+                      data-field-surface="Artificial"
+                      data-weather="18 °C / Sunny / Wind Speed 19 km/h / Humidity 73%"
+                      data-referee="Nick VAGENAS"
+                      data-linesman1="Mobin ASHTIANI"
+                      data-linesman2="Joshua YARUSSKY"
+                      data-game-website="https://oplsoccer.ca/match/349411817/"
+                      data-local=""
+                      data-youtube="https://youtu.be/xo8HRAt8gsE?si=fX77tNPMJaotF37_"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/18/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/18/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411817/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/18">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Richmond Hill SC Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">03 Jun 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC U20 Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">–</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">–</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">International FC U20</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League U20 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/T_IZtGFSGrk?si=tYasUG9qnTk1OTwZ" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span class="td-muted">—</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/17" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="17"
+                      data-date="2026-06-03"
+                      data-kickoff-time="21:00"
+                      data-team="5"
+                      data-opponent="International FC U20"
+                      data-competition="Ontario Premier League U20 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-4-2"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="23 °C / Passing clouds / Wind Speed 19 km/h / Humidity 31%"
+                      data-referee="Julio RUIZ"
+                      data-linesman1="Amun BINNING"
+                      data-linesman2="Ryan RAMIREZ"
+                      data-game-website="https://oplsoccer.ca/match/349414581/"
+                      data-local=""
+                      data-youtube="https://youtu.be/T_IZtGFSGrk?si=tYasUG9qnTk1OTwZ"
+                      data-veo=""
+                      data-report-ready="false"
+                      data-my-team-kicks-off="false">✏ Edit</button>
+                    <a href="/games/17/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/17/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349414581/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/17">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="International FC U20">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">01 Jun 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name">International FC B Men</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">3</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">9</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/0Te-XqmiYeo?si=FQ01T0rnuYyy1kr6" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/16" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="16"
+                      data-date="2026-06-01"
+                      data-kickoff-time="20:45"
+                      data-team="4"
+                      data-opponent="International FC B Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="away"
+                      data-formation="4-4-2"
+                      data-location="Mount Joy"
+                      data-field-surface="Artificial"
+                      data-weather="15 °C / Clear / Wind Speed 13 km/h / Humidity 59%"
+                      data-referee="Liam HERBERT"
+                      data-linesman1="Timothy ADEYEMO"
+                      data-linesman2="Matteo SEGUINOT"
+                      data-game-website="https://oplsoccer.ca/match/349411814/"
+                      data-local=""
+                      data-youtube="https://youtu.be/0Te-XqmiYeo?si=FQ01T0rnuYyy1kr6"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/16/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/16/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411814/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/16">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="International FC B Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">30 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name">Simcoe County Rovers FC</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">–</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">–</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name-ours">Unionville Milliken SC U20 Men 2026</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League U20 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/SCWQ5R_0tak?si=z0eqduKDbg5yguBd" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span class="td-muted">—</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/15" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="15"
+                      data-date="2026-05-30"
+                      data-kickoff-time="14:00"
+                      data-team="5"
+                      data-opponent="Simcoe County Rovers FC"
+                      data-competition="Ontario Premier League U20 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="away"
+                      data-formation="4-3-3"
+                      data-location="JC Massie Field"
+                      data-field-surface="Artificial"
+                      data-weather="14 °C / Cool / Wind Speed 19 km/h / Humidity 64%"
+                      data-referee="Matteo SEGUINOT"
+                      data-linesman1="Armando PEREIRA"
+                      data-linesman2="Onder YUKSEL"
+                      data-game-website="https://oplsoccer.ca/match/349414577/"
+                      data-local=""
+                      data-youtube="https://youtu.be/SCWQ5R_0tak?si=z0eqduKDbg5yguBd"
+                      data-veo=""
+                      data-report-ready="false"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/15/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/15/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349414577/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/15">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Simcoe County Rovers FC">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">25 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">2</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">3</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">The Borough FC B Men</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/wQuQo7JvNLs?si=F37DSeV4PTbzXBJP" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/13" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="13"
+                      data-date="2026-05-25"
+                      data-kickoff-time="21:00"
+                      data-team="4"
+                      data-opponent="The Borough FC B Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-4-2"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="22 °C / Passing clouds. / Wind Speed 15 km/h / Humidity 65%"
+                      data-referee="Petros VASILOS"
+                      data-linesman1="Ryan RAMIREZ"
+                      data-linesman2="Nick MURRAY"
+                      data-game-website="https://oplsoccer.ca/match/349411809/"
+                      data-local=""
+                      data-youtube="https://youtu.be/wQuQo7JvNLs?si=F37DSeV4PTbzXBJP"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/13/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/13/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411809/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/13">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="The Borough FC B Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">22 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name">Master&#39;s FA U20 Men</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">1</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">4</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name-ours">Unionville Milliken SC U20 Men 2026</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League U20 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/yXQAj3YwsGk?si=bhoFv0_UrSSZ-5pk" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/14" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="14"
+                      data-date="2026-05-22"
+                      data-kickoff-time="21:00"
+                      data-team="5"
+                      data-opponent="Master&#39;s FA U20 Men"
+                      data-competition="Ontario Premier League U20 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="away"
+                      data-formation="4-3-3"
+                      data-location="L&#39;Amoreaux 5"
+                      data-field-surface="Artificial"
+                      data-weather="14 °C / Partly cloudy. / Wind Speed 15 km/h / Humidity 36%"
+                      data-referee="Daniel JACOB"
+                      data-linesman1="Jin MA"
+                      data-linesman2="Matteo SEGUINOT"
+                      data-game-website="https://oplsoccer.ca/match/349414572/"
+                      data-local=""
+                      data-youtube="https://youtu.be/yXQAj3YwsGk?si=bhoFv0_UrSSZ-5pk"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/14/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/14/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349414572/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/14">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Master&#39;s FA U20 Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">20 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name">Kingston Sentinels B</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">3</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">1</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/ZL9qcL5l2Fc?si=xt0YyTk00QvDXEE0" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/12" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="12"
+                      data-date="2026-05-20"
+                      data-kickoff-time="19:30"
+                      data-team="4"
+                      data-opponent="Kingston Sentinels B"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="away"
+                      data-formation="4-4-2"
+                      data-location="CaraCo Home Field"
+                      data-field-surface="Artificial"
+                      data-weather="15 °C / Partly sunny / Wind Speed 17 km/h / Humidity 63%"
+                      data-referee="Tyrone AJANI"
+                      data-linesman1="Katrina VANDERVOORT"
+                      data-linesman2="Alexandra BLOWER"
+                      data-game-website="https://oplsoccer.ca/match/349411806/"
+                      data-local=""
+                      data-youtube="https://youtu.be/ZL9qcL5l2Fc?si=xt0YyTk00QvDXEE0"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/12/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/12/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411806/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/12">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Kingston Sentinels B">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">12 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name">Whitby FC U20</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">0</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">4</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name-ours">Unionville Milliken SC U20 Men 2026</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League U20 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/RItNTsg73GA?si=T369XII2K04SsnfN" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/11" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="11"
+                      data-date="2026-05-12"
+                      data-kickoff-time="21:00"
+                      data-team="5"
+                      data-opponent="Whitby FC U20"
+                      data-competition="Ontario Premier League U20 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="away"
+                      data-formation="4-3-3"
+                      data-location="Whitby Dome"
+                      data-field-surface="Indoor"
+                      data-weather="Indoor"
+                      data-referee="Morgan WRIGHT-MELLONE"
+                      data-linesman1="Michael DAVIES"
+                      data-linesman2="Amun BINNING"
+                      data-game-website="https://oplsoccer.ca/match/349414566/"
+                      data-local=""
+                      data-youtube="https://youtu.be/RItNTsg73GA?si=T369XII2K04SsnfN"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="false">✏ Edit</button>
+                    <a href="/games/11/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/11/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349414566/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/11">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Whitby FC U20">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">11 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">1</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">3</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">Whitby FC B Men</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/mtPuLr-zA0k?si=lIBUrUs8SaxFwzQL" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/7" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="7"
+                      data-date="2026-05-11"
+                      data-kickoff-time="21:00"
+                      data-team="4"
+                      data-opponent="Whitby FC B Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-4-2"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="9 °C / Passing clouds / Wind Speed 22 km/h / Humidity 34%"
+                      data-referee="Nick VAGENAS"
+                      data-linesman1="Petros VASILOS"
+                      data-linesman2="Parham NAJMI"
+                      data-game-website="https://oplsoccer.ca/match/349411802/"
+                      data-local=""
+                      data-youtube="https://youtu.be/mtPuLr-zA0k?si=lIBUrUs8SaxFwzQL"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/7/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/7/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411802/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/7">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Whitby FC B Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">06 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC U20 Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">5</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">0</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">Richmond Hill SC U20</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League U20 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/M4VKl6oIg4c?si=vU-JnjJE_USOiKNg" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/10" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="10"
+                      data-date="2026-05-06"
+                      data-kickoff-time="21:00"
+                      data-team="5"
+                      data-opponent="Richmond Hill SC U20"
+                      data-competition="Ontario Premier League U20 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-3-3"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="7 °C / Passing clouds / Wind Speed 9 km/h / Humidity 42%"
+                      data-referee="Eric NUSSBAUM"
+                      data-linesman1="Nick VAGENAS"
+                      data-linesman2="Najeeb ALMASRI"
+                      data-game-website="https://oplsoccer.ca/match/349414561/"
+                      data-local=""
+                      data-youtube="https://youtu.be/M4VKl6oIg4c?si=vU-JnjJE_USOiKNg"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="false">✏ Edit</button>
+                    <a href="/games/10/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/10/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349414561/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/10">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Richmond Hill SC U20">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">04 May 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">6</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">0</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">International FC B Men</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/gDP00zjaWyE?si=G9y2dlO5HudwlzW6" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/6" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="6"
+                      data-date="2026-05-04"
+                      data-kickoff-time="21:00"
+                      data-team="4"
+                      data-opponent="International FC B Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-1-4-1"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="20 °C / Passing clouds / Wind 17 km/h / Humidity 35%"
+                      data-referee="Ryan RAMIREZ"
+                      data-linesman1="Isaak HUBJER"
+                      data-linesman2="Eric NUSSBAUM"
+                      data-game-website="https://oplsoccer.ca/match/349411796/"
+                      data-local=""
+                      data-youtube="https://youtu.be/gDP00zjaWyE?si=G9y2dlO5HudwlzW6"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/6/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/6/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411796/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/6">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="International FC B Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">29 Apr 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC U20 Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">4</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">2</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">The Borough FC U20</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League U20 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/n_gzKNUL5es?si=Bhgz0RuGp5aP6OHV" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/8" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="8"
+                      data-date="2026-04-29"
+                      data-kickoff-time="21:00"
+                      data-team="5"
+                      data-opponent="The Borough FC U20"
+                      data-competition="Ontario Premier League U20 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-3-3"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="7 °C / Passing clouds / Wind Speed 19 km/h / Humidity 71%"
+                      data-referee="Luciano COPPOTELLI"
+                      data-linesman1="Onder YUKSEL"
+                      data-linesman2="Andrew MOSER"
+                      data-game-website="https://oplsoccer.ca/match/349414555/"
+                      data-local=""
+                      data-youtube="https://youtu.be/n_gzKNUL5es?si=Bhgz0RuGp5aP6OHV"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="false">✏ Edit</button>
+                    <a href="/games/8/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/8/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349414555/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/8">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="The Borough FC U20">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">25 Apr 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name">The Borough FC B Men</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">3</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">3</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/FeNHdt5YMq4?si=SD6Ylza4FvIeVBUa" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/5" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="5"
+                      data-date="2026-04-25"
+                      data-kickoff-time="17:00"
+                      data-team="4"
+                      data-opponent="The Borough FC B Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="away"
+                      data-formation="4-4-2"
+                      data-location="Birchmount Stadium"
+                      data-field-surface="Artificial"
+                      data-weather="9 °C / Overcast / Wind 17 km/h / Humidity 76%"
+                      data-referee="Michael KONSTANTOPOULOS"
+                      data-linesman1="Daniel JACOB"
+                      data-linesman2="Isaak HUBJER"
+                      data-game-website="https://oplsoccer.ca/match/349411792/"
+                      data-local=""
+                      data-youtube="https://youtu.be/FeNHdt5YMq4?si=SD6Ylza4FvIeVBUa"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/5/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/5/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411792/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/5">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="The Borough FC B Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+          <tr>
+            <td class="td-date">20 Apr 2026</td>
+
+            <td class="td-scoreline">
+              
+              
+                
+                <span class="sl-team sl-team-left">
+                  <span class="sl-name-ours">Unionville Milliken SC B Men 2026</span>
+                </span>
+                <span class="sl-score">
+                  <span class="sl-goals">1</span>
+                  <span class="sl-sep">:</span>
+                  <span class="sl-goals">2</span>
+                </span>
+                <span class="sl-team sl-team-right">
+                  <span class="sl-name">Pickering FC B Men</span>
+                </span>
+              
+            </td>
+
+            <td>Ontario Premier League 3 (M)</td>
+
+            <td>Northeast 2026</td>
+
+
+            <td>
+              
+                <a href="https://youtu.be/R_qRCzQ3o-4?si=7RNsOs6-Zk8taWrP" target="_blank" class="vid-badge vid-yt" title="Watch on YouTube">▶</a>
+              
+            </td>
+
+            <td>
+              
+                <span title="Report ready" style="color:#1e8a4a; font-size:0.85rem;">✔</span>
+              
+            </td>
+
+            <td>
+              <div class="row-actions">
+                <a href="/recording/game/4" class="btn btn-record btn-sm">▶ Record</a>
+                <div class="row-menu">
+                  <button class="btn btn-ghost btn-sm row-menu-trigger" type="button">⋯</button>
+                  <div class="row-menu-dropdown">
+                    <button class="row-menu-item edit-btn"
+                      data-id="4"
+                      data-date="2026-04-20"
+                      data-kickoff-time="21:00"
+                      data-team="4"
+                      data-opponent="Pickering FC B Men"
+                      data-competition="Ontario Premier League 3 (M)"
+                      data-league="Northeast 2026"
+                      data-is-home="home"
+                      data-formation="4-4-2"
+                      data-location="Bill Crothers"
+                      data-field-surface="Artificial"
+                      data-weather="3 °C / Passing clouds / Wind 20 km/h / Humidity45%"
+                      data-referee="Christopher CAMERON"
+                      data-linesman1="Luciano COPPOTELLI"
+                      data-linesman2="Andrew MOSER"
+                      data-game-website="https://oplsoccer.ca/match/349411788/"
+                      data-local=""
+                      data-youtube="https://youtu.be/R_qRCzQ3o-4?si=7RNsOs6-Zk8taWrP"
+                      data-veo=""
+                      data-report-ready="true"
+                      data-my-team-kicks-off="true">✏ Edit</button>
+                    <a href="/games/4/lineup" class="row-menu-item">⚽ Lineup</a>
+                    <a href="/stats/game/4/summary2" class="row-menu-item">📊 Report</a>
+                    
+                    <a href="https://oplsoccer.ca/match/349411788/" target="_blank" class="row-menu-item">🌐 Website</a>
+                    
+                    <div class="row-menu-sep"></div>
+                    <form method="POST" action="/games/delete/4">
+                      <button type="submit" class="row-menu-item row-menu-item-danger" data-name="Pickering FC B Men">✕ Delete</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </td>
+
+          </tr>
+          
+        </tbody>
+      </table>
     </div>
-
-    <div class="games-card">
-      <div class="games-table-wrap">
-        <table class="games-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Match</th>
-              <th>Competition</th>
-              <th>Video</th>
-              <th>Report</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">22 May 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name">Master&#39;s FA U20 Men</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">1</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">4</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC U20 Men 2026</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League U20 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/yXQAj3YwsGk?si=bhoFv0_UrSSZ-5pk" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-05-22_unionville-milliken-sc-u20-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">12 May 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name">Whitby FC U20</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">0</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">4</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC U20 Men 2026</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League U20 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/RItNTsg73GA?si=T369XII2K04SsnfN" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-05-12_unionville-milliken-sc-u20-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">06 May 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC U20 Men 2026</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">5</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">0</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name">Richmond Hill SC U20</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League U20 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/M4VKl6oIg4c?si=vU-JnjJE_USOiKNg" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-05-06_unionville-milliken-sc-u20-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-            
-            
-            
-            
-            
-            <tr>
-
-              <td class="td-date">29 Apr 2026</td>
-
-              <td class="td-scoreline">
-                
-                  <span class="sl-team sl-team-left">
-                    <span class="sl-name-ours sl-name">Unionville Milliken SC U20 Men 2026</span>
-                  </span>
-                  <span class="sl-score">
-                    <span class="sl-goals">4</span>
-                    <span class="sl-sep">:</span>
-                    <span class="sl-goals">2</span>
-                  </span>
-                  <span class="sl-team sl-team-right">
-                    <span class="sl-name">The Borough FC U20</span>
-                  </span>
-                
-              </td>
-
-              <td>Ontario Premier League U20 (M)</td>
-
-              <td>
-                
-                  <a href="https://youtu.be/n_gzKNUL5es?si=Bhgz0RuGp5aP6OHV" target="_blank" class="vid-badge vid-yt">▶</a>
-                
-              </td>
-
-              <td>
-                <a href="2026-04-29_unionville-milliken-sc-u20-men-2026.html" class="report-link">Report</a>
-              </td>
-
-            </tr>
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div>
+
   
 
-</div>
+
+  <!-- ── Add Modal ──────────────────────────────────────── -->
+  <div id="add-modal" class="modal-overlay" onclick="closeModal('add-modal')">
+    <div class="modal modal-wide" onclick="event.stopPropagation()">
+      <h2 class="modal-title">Add Game</h2>
+      <form method="POST" action="/games/create">
+        <div class="modal-cols">
+
+          <!-- LEFT -->
+          <div>
+            <div class="form-section-title">Match Details</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date *</label>
+                <input type="date" name="date" required>
+              </div>
+              <div class="form-group">
+                <label>Kickoff Time</label>
+                <input type="time" name="kickoff_time">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Team</label>
+              <select name="team_id">
+                <option value="">— none —</option>
+                
+                <option value="4">Unionville Milliken SC B Men 2026</option>
+                
+                <option value="5">Unionville Milliken SC U20 Men 2026</option>
+                
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Opponent *</label>
+              <input type="text" name="opponent" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Competition</label>
+                <input type="text" name="competition" placeholder="e.g. Copa del Rey">
+              </div>
+              <div class="form-group">
+                <label>League</label>
+                <input type="text" name="league" placeholder="e.g. División de Honor">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Formation</label>
+                <select name="formation">
+                  <option value="">Unknown</option>
+                  
+                  <option value="4-3-3">4-3-3</option>
+                  
+                  <option value="4-2-3-1">4-2-3-1</option>
+                  
+                  <option value="4-4-2">4-4-2</option>
+                  
+                  <option value="3-5-2">3-5-2</option>
+                  
+                  <option value="4-5-1">4-5-1</option>
+                  
+                  <option value="5-3-2">5-3-2</option>
+                  
+                  <option value="3-4-3">3-4-3</option>
+                  
+                  <option value="4-1-4-1">4-1-4-1</option>
+                  
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Home / Away</label>
+                <select name="is_home">
+                  <option value="">— Unknown —</option>
+                  <option value="home">Home</option>
+                  <option value="away">Away</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-section-title">Video Source <span class="text-muted">(pick one)</span></div>
+            <div class="form-group">
+              <label>Local File Path</label>
+              <input type="text" name="local_video_path" placeholder="C:\Videos\match.mp4">
+            </div>
+            <div class="form-group">
+              <label>YouTube Link</label>
+              <input type="url" name="youtube_link" placeholder="https://youtube.com/watch?v=...">
+            </div>
+            <div class="form-group">
+              <label>Veo Link</label>
+              <input type="url" name="veo_link" placeholder="https://app.veo.co/...">
+            </div>
+            <div class="form-section-title">Publication</div>
+            <div class="form-group">
+              <label>Kicks off</label>
+              <select name="my_team_kicks_off" id="add-my-team-kicks-off">
+                <option value="">— Not set —</option>
+                <option value="1">My team</option>
+                <option value="0">Opponent</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div>
+            <div class="form-section-title">Venue &amp; Officials</div>
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" name="location" placeholder="e.g. Estadio Municipal">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Field Surface</label>
+                <select name="field_surface">
+                  <option value="">— Select —</option>
+                  <option value="Grass">Grass</option>
+                  <option value="Artificial">Artificial</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Indoor">Indoor</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Weather</label>
+                <input type="text" name="weather_conditions" placeholder="e.g. 4 °C, cloudy">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Referee</label>
+              <input type="text" name="referee">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Linesman 1</label>
+                <input type="text" name="linesman_1">
+              </div>
+              <div class="form-group">
+                <label>Linesman 2</label>
+                <input type="text" name="linesman_2">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Game Website</label>
+              <input type="url" name="game_website_link" placeholder="https://...">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('add-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Game</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ── Edit Modal ─────────────────────────────────────── -->
+  <div id="edit-modal" class="modal-overlay" onclick="closeModal('edit-modal')">
+    <div class="modal modal-wide" onclick="event.stopPropagation()">
+      <h2 class="modal-title">Edit Game</h2>
+      <form method="POST" id="edit-form" action="">
+        <div class="modal-cols">
+
+          <!-- LEFT -->
+          <div>
+            <div class="form-section-title">Match Details</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Date *</label>
+                <input type="date" name="date" id="edit-date" required>
+              </div>
+              <div class="form-group">
+                <label>Kickoff Time</label>
+                <input type="time" name="kickoff_time" id="edit-kickoff-time">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Team</label>
+              <select name="team_id" id="edit-team">
+                <option value="">— none —</option>
+                
+                <option value="4">Unionville Milliken SC B Men 2026</option>
+                
+                <option value="5">Unionville Milliken SC U20 Men 2026</option>
+                
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Opponent *</label>
+              <input type="text" name="opponent" id="edit-opponent" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Competition</label>
+                <input type="text" name="competition" id="edit-competition">
+              </div>
+              <div class="form-group">
+                <label>League</label>
+                <input type="text" name="league" id="edit-league">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Formation</label>
+                <select name="formation" id="edit-formation">
+                  <option value="">Unknown</option>
+                  
+                  <option value="4-3-3">4-3-3</option>
+                  
+                  <option value="4-2-3-1">4-2-3-1</option>
+                  
+                  <option value="4-4-2">4-4-2</option>
+                  
+                  <option value="3-5-2">3-5-2</option>
+                  
+                  <option value="4-5-1">4-5-1</option>
+                  
+                  <option value="5-3-2">5-3-2</option>
+                  
+                  <option value="3-4-3">3-4-3</option>
+                  
+                  <option value="4-1-4-1">4-1-4-1</option>
+                  
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Home / Away</label>
+                <select name="is_home" id="edit-is-home">
+                  <option value="">— Unknown —</option>
+                  <option value="home">Home</option>
+                  <option value="away">Away</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-section-title">Video Source <span class="text-muted">(pick one)</span></div>
+            <div class="form-group">
+              <label>Local File Path</label>
+              <input type="text" name="local_video_path" id="edit-local">
+            </div>
+            <div class="form-group">
+              <label>YouTube Link</label>
+              <input type="url" name="youtube_link" id="edit-youtube">
+            </div>
+            <div class="form-group">
+              <label>Veo Link</label>
+              <input type="url" name="veo_link" id="edit-veo">
+            </div>
+
+            <div class="form-section-title">Publication</div>
+            <div class="form-group" style="flex-direction: row; align-items: center; gap: 0.6rem;">
+              <input type="checkbox" name="report_ready" id="edit-report-ready" value="1"
+                    style="width:auto !important; accent-color:#1a1a2e; flex-shrink:0;">
+              <label for="edit-report-ready" style="text-transform:none; letter-spacing:0; font-size:0.82rem; color:#1a1a2e;">
+                Report ready
+              </label>
+            </div>
+            <div class="form-group">
+              <label>Kicks off</label>
+              <select name="my_team_kicks_off" id="edit-my-team-kicks-off">
+                <option value="">— Not set —</option>
+                <option value="1">My team</option>
+                <option value="0">Opponent</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div>
+            <div class="form-section-title">Venue &amp; Officials</div>
+            <div class="form-group">
+              <label>Location</label>
+              <input type="text" name="location" id="edit-location">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Field Surface</label>
+                <select name="field_surface" id="edit-field-surface">
+                  <option value="">— Select —</option>
+                  <option value="Grass">Grass</option>
+                  <option value="Artificial">Artificial</option>
+                  <option value="Hybrid">Hybrid</option>
+                  <option value="Indoor">Indoor</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Weather</label>
+                <input type="text" name="weather_conditions" id="edit-weather">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Referee</label>
+              <input type="text" name="referee" id="edit-referee">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Linesman 1</label>
+                <input type="text" name="linesman_1" id="edit-linesman1">
+              </div>
+              <div class="form-group">
+                <label>Linesman 2</label>
+                <input type="text" name="linesman_2" id="edit-linesman2">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Game Website</label>
+              <input type="url" name="game_website_link" id="edit-game-website">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('edit-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div><!-- /.games-wrap -->
+
+<script>
+function openModal(id)  { document.getElementById(id).classList.add('open');    }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.edit-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.getElementById('edit-form').action          = `/games/edit/${this.dataset.id}`;
+    document.getElementById('edit-date').value           = this.dataset.date;
+    document.getElementById('edit-kickoff-time').value   = this.dataset.kickoffTime   || '';
+    document.getElementById('edit-team').value           = this.dataset.team          || '';
+    document.getElementById('edit-opponent').value       = this.dataset.opponent;
+    document.getElementById('edit-competition').value    = this.dataset.competition;
+    document.getElementById('edit-league').value         = this.dataset.league;
+    document.getElementById('edit-is-home').value        = this.dataset.isHome        || '';
+    document.getElementById('edit-formation').value      = this.dataset.formation;
+    document.getElementById('edit-location').value       = this.dataset.location      || '';
+    document.getElementById('edit-field-surface').value  = this.dataset.fieldSurface  || '';
+    document.getElementById('edit-weather').value        = this.dataset.weather       || '';
+    document.getElementById('edit-referee').value        = this.dataset.referee       || '';
+    document.getElementById('edit-linesman1').value      = this.dataset.linesman1     || '';
+    document.getElementById('edit-linesman2').value      = this.dataset.linesman2     || '';
+    document.getElementById('edit-game-website').value   = this.dataset.gameWebsite   || '';
+    document.getElementById('edit-local').value          = this.dataset.local;
+    document.getElementById('edit-youtube').value        = this.dataset.youtube;
+    document.getElementById('edit-veo').value            = this.dataset.veo;
+    document.getElementById('edit-report-ready').checked = this.dataset.reportReady === 'true';
+    document.getElementById('edit-my-team-kicks-off').value = 
+      this.dataset.myTeamKicksOff === 'true' ? '1' : 
+      (this.dataset.myTeamKicksOff === 'false' ? '0' : '');
+    console.log('report_ready:', this.dataset.reportReady);
+    console.log('my_team_kicks_off:', this.dataset.myTeamKicksOff);
+    openModal('edit-modal');
+  });
+});
+
+// Delete confirm
+document.querySelectorAll('.row-menu-item-danger').forEach(btn => {
+  btn.addEventListener('click', function (e) {
+    if (!confirm(`Delete game vs ${this.dataset.name}?`)) e.preventDefault();
+  });
+});
+
+// Dropdown toggle
+document.querySelectorAll('.row-menu-trigger').forEach(trigger => {
+  trigger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    const menu = this.closest('.row-menu');
+    const isOpen = menu.classList.contains('open');
+    document.querySelectorAll('.row-menu.open').forEach(m => m.classList.remove('open'));
+    if (!isOpen) menu.classList.add('open');
+  });
+});
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.row-menu.open').forEach(m => m.classList.remove('open'));
+});
+</script>
+
+  </main>
 </body>
 </html>
